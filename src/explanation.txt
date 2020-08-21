@@ -1,0 +1,24 @@
+
+//by default when using only context, you just need to
+//create a context and create a function that returns the provider.
+// The provider then takes in the value which is ti be sent to
+//other componenets. But once you introduce a reducer then it has
+//to be instantiated in the function returning the provider so
+//that its values can be made available to the provider.
+//Its is okay to instantiate the reducer, initial state here
+//but it wont be clean so stephen moves everything to another file.
+// By defaukt we alwasy export our context and provider to make
+//them availbale in app.js and then in any other file tha trequires
+//it. Stephen then wrapped the whole context file in a function
+//that takes in all the values the reducer will need and hence
+//the provider will take and still returned the context and
+//provider from the function. He then put all the action functions
+//in objects and sent them along with the function.
+//Udin his bounactions he wrapped everyfunction by its key and
+//put them into that bound action. in this way he doesnt have to
+//send the dispatch like everyone does but rather he sends the
+//functions that can be called later to disoatch a specific action.
+//LOOK AT YOUR CONTEXT DEMYSTYFIED EMAIL FOR a re-understanding
+//to fully understand a flow in JS click on the variable being refernced
+//check to see other instances of that variable in that file.
+//it will help you to understand the flow.
