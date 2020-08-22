@@ -15,6 +15,10 @@ const authReducer = (state, action) => {
       return { errorMessage: "", token: action.payload };
     case "signin":
       return { errorMessage: "", token: action.payload };
+    case "clear_error_message":
+      return { ...state, errorMessage: "" };
+    case "signout":
+      return { token: null, errorMessage: "" };
     default:
       return state;
   }
@@ -28,8 +32,22 @@ export const Provider = ({ children }) => {
   });
 
   //ACTIONS
+  const tryLocalSignin = async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      dispatch({ type: "signin", payload: token });
+      navigate("TrackList");
+    } else {
+      navigate("Signup");
+    }
+  };
 
-  //SIGNUP
+  //clearError
+  const clearErrorMessage = () => {
+    dispatch({ type: "clear_error_message" });
+  };
+
+  //signup
   const signup = async (email, password) => {
     try {
       const response = await trackerApi.post("/signup", { email, password });
@@ -56,17 +74,25 @@ export const Provider = ({ children }) => {
     } catch (err) {
       dispatch({
         type: "add_error",
-        payload: "Something went wrong with sign up",
+        payload: "Something went wrong with sign in",
       });
     }
   };
 
   //SIGNOUT
-  const signout = (dispatch) => {
-    return ({ email, password }) => {};
+  const signout = async () => {
+    await AsyncStorage.removeItem("token");
+    dispatch({ type: "signout" });
+    navigate("loginFlow");
   };
 
-  const boundActions = { signup, signin, signout };
+  const boundActions = {
+    signup,
+    signin,
+    signout,
+    clearErrorMessage,
+    tryLocalSignin,
+  };
 
   return (
     <authContext.Provider value={{ state, ...boundActions }}>
