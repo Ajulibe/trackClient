@@ -6,7 +6,8 @@ import { navigate } from "../navigationRef";
 // //CREATE CONTEXT
 const authContext = React.createContext();
 
-//REDUCER
+//REDUCERS
+//authentication reducer
 const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
