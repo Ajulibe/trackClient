@@ -1,5 +1,5 @@
 import "../_mockLocation";
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native-elements";
 import { SafeAreaView, withNavigationFocus } from "react-navigation";
@@ -10,6 +10,22 @@ import TrackForm from "./components/TrackForm";
 
 const TrackCreateScreen = ({ isFocused }) => {
   const { state, addLocation } = useContext(locationContext);
+
+  //useCallback is used to prevent the function to be run everytime
+  //this component re-renders as a result of any general state change
+  //here the function is only ran when sate.recording changes.
+  //it simply means call this function only if the state of recording has changed
+  //we could have easily passed in state.recording in useLocation but whast the point?
+
+  //The whole point of this is to get useEffect to run again when somthing changes
+  //and this function action changes because the component has re-rendered so just use
+  //this funtion. but React syays you cant use it directly. you have you use it in a
+  //use callback hook and add only that particular variable that has changed in the
+  //function in an array.
+  const callback = useCallback(
+    (location) => addLocation(location, state.recording),
+    [state.recording]
+  );
 
   //this is the same syntax he used with the
   //createDataContext in the Blog Project
@@ -23,9 +39,7 @@ const TrackCreateScreen = ({ isFocused }) => {
   //it is the same thing as below.
   //run the function and send the result to err.
   // const x = aka(4);
-  const [err] = useLocation(isFocused, (location) =>
-    addLocation(location, state.recording)
-  );
+  const [err] = useLocation(isFocused, callback);
 
   // console.log(isFocused);
   return (

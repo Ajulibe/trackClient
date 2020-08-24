@@ -11,6 +11,24 @@ export default (shouldTrack, callback) => {
   //the isFocused taken from withNavigationFocus from
   // react-navigation is renamed to shouldTrack
   //remember, it returns a boolean(True or False)
+  //if we ever want use effectuse an updated state value, then
+  //the value has to be included in the array to show it has changed
+  //this will tell useEffect to run again with the updated value.
+  //Clean up functions only run the next time that use effect hook is called
+  useEffect(() => {
+    if (shouldTrack) {
+      startWatching();
+    } else {
+      subscriber.remove();
+      setSubscriber(null);
+    }
+    return () => {
+      if (subscriber) {
+        subscriber.remove();
+      }
+    };
+  }, [shouldTrack, callback]);
+
   const [err, setErr] = useState(null);
   const [subscriber, setSubscriber] = useState(null);
 
@@ -36,15 +54,6 @@ export default (shouldTrack, callback) => {
       setErr(e);
     }
   };
-
-  useEffect(() => {
-    if (shouldTrack) {
-      startWatching();
-    } else {
-      subscriber.remove();
-      setSubscriber(null);
-    }
-  }, [shouldTrack]);
 
   //it is convention to return an array of variables
   //that will be used by other files while creating a reuseable hook
