@@ -39,7 +39,7 @@ const TrackCreateScreen = ({ isFocused }) => {
   //it is the same thing as below.
   //run the function and send the result to err.
   // const x = aka(4);
-  const [err] = useLocation(isFocused, callback);
+  const [err] = useLocation(isFocused || state.recording, callback);
 
   // console.log(isFocused);
   return (

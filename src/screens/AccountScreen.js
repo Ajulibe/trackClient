@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Button } from "react-native-elements";
 import { SafeAreaView } from "react-navigation";
 import Spacer from "./components/Spacer";
-import authContext from "../context/ContextFile";
+import authContext from "../context/AuthContext";
 
 const AccountScreen = () => {
   const { signout } = useContext(authContext);

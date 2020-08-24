@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { Text, Input, Button } from "react-native-elements";
 import Spacer from "./components/Spacer";
-import authContext from "../context/ContextFile";
+import authContext from "../context/AuthContext";
 
 const SigninScreen = ({ navigation }) => {
   const { state, signin, clearErrorMessage } = useContext(authContext);

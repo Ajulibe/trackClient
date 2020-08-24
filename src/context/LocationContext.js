@@ -1,7 +1,4 @@
-import { AsyncStorage } from "react-native";
 import React, { useReducer } from "react";
-import trackerApi from "../api/tracker";
-import { navigate } from "../navigationRef";
 
 // //CREATE CONTEXT
 const locationContext = React.createContext();
