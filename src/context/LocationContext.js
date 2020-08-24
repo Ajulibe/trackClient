@@ -16,6 +16,8 @@ const locationReducer = (state, action) => {
       return { ...state, locations: [...state.locations, action.payload] };
     case "change_name":
       return { ...state, name: action.payload };
+    case "reset":
+      return { ...state, name: "", locations: [] };
     default:
       return state;
   }
@@ -55,11 +57,16 @@ export const Provider = ({ children }) => {
     }
   };
 
+  const reset = () => {
+    dispatch({ type: "reset" });
+  };
+
   const boundActions = {
     startRecording,
     stopRecording,
     addLocation,
     changeName,
+    reset,
   };
 
   return (
